@@ -10,10 +10,15 @@ import UIKit
 
 class CharacterListTableViewCell: UITableViewCell {
 
-    func configure(with character: Character) {
-        textLabel?.text = character.name
-        if let data = NetworkService.shared.getImage(by: character.image){
+    func setName(with name: String?) {
+        textLabel?.text = name
+    }
+    
+    func setImage(with data: Data?) {
+        if let data = data{
             imageView?.image = UIImage(data: data)
+            self.layoutSubviews()
         }
     }
+    
 }

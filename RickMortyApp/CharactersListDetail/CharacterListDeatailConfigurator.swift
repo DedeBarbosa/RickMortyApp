@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol CharaterListDetailsConfiguratorProtocol: class {
-    func configure(with view: CharacterListDetailsViewController, and character: Character)
+protocol CharacterListDetailsConfiguratorProtocol: class {
+    func configure(view: CharacterListDetailsViewController, with character: Character, and image: Data?)
 }
 
-class CharaterListDetailsConfigurator: CharaterListDetailsConfiguratorProtocol {
-    func configure(with view: CharacterListDetailsViewController, and character: Character) {
+class CharacterListDetailsConfigurator: CharacterListDetailsConfiguratorProtocol {
+    func configure(view: CharacterListDetailsViewController, with character: Character, and image: Data?) {
         let presenter = CharacterListDetailsPresenter(view: view)
-        let interactor = CharacterListDetailsInteractor(presentor: presenter, character: character)
+        let interactor = CharacterListDetailsInteractor(presenter: presenter, character: character, image: image)
         
         view.presenter = presenter
         presenter.interactor = interactor

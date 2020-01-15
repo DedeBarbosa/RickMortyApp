@@ -12,7 +12,7 @@ protocol CharacterListConfiguratorProtocol: class {
     func configure(with viewController: CharacterListViewController)
 }
 
-class CharacterListCofigurator: CharacterListConfiguratorProtocol {
+class CharacterListConfigurator: CharacterListConfiguratorProtocol {
     func configure(with viewController: CharacterListViewController) {
         let presenter = CharacterListPresenter(view: viewController)
         let interactor = CharacterListInteractor(presenter: presenter)
@@ -21,5 +21,6 @@ class CharacterListCofigurator: CharacterListConfiguratorProtocol {
         viewController.presenter = presenter
         presenter.interactor = interactor
         presenter.router = router
+        interactor.networkService = NetworkService.shared
     }
 }

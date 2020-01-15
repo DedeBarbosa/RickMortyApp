@@ -8,7 +8,12 @@
 
 import Foundation
 
-class NetworkService{
+protocol NetworkServiceProtocol{
+    func fetchMovieList(completion: @escaping (_ characters: CharactersList)->())
+    func getImage(by path: String, completion: @escaping(_ data: Data)->())
+}
+
+class NetworkService: NetworkServiceProtocol{
 
     static let shared = NetworkService()
     static var imageDictionary = [String : Data]()
@@ -41,6 +46,17 @@ class NetworkService{
         NetworkService.imageDictionary[path] = imageData
         return imageData
     }
-       
+    
+    func getImage(by path: String, completion: @escaping (_ data: Data)->()) {
+           guard let url = URL(string: path) else {return}
+            URLSession.shared.dataTask(with: url){ (data, _, _) in
+                guard let data = data else {return}
+                DispatchQueue.main.async {
+                    completion(data)
+                }
+                    
+            }.resume()
+       }
+    
 }
 

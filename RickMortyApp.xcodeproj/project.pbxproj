@@ -78,17 +78,16 @@
 		0F533BED237C45ED0060F79E /* RickMortyApp */ = {
 			isa = PBXGroup;
 			children = (
+				0FCF090923800EB0001D4C9C /* Storyboards */,
+				0FCF090823800EA0001D4C9C /* assets */,
+				0FCF090723800E83001D4C9C /* Services */,
 				0F533C13237C545D0060F79E /* CharactersListDetail */,
 				0F533C10237C4F960060F79E /* Views */,
 				0F533C0D237C46CB0060F79E /* Model */,
 				0F533C02237C45FB0060F79E /* CharactersList */,
 				0F533BEE237C45ED0060F79E /* AppDelegate.swift */,
 				0F533BF0237C45ED0060F79E /* SceneDelegate.swift */,
-				0F533BF4237C45ED0060F79E /* Main.storyboard */,
-				0F533BF7237C45EF0060F79E /* Assets.xcassets */,
-				0F533BF9237C45EF0060F79E /* LaunchScreen.storyboard */,
 				0F533BFC237C45EF0060F79E /* Info.plist */,
-				0F533C0E237C47D80060F79E /* NetworkService.swift */,
 			);
 			path = RickMortyApp;
 			sourceTree = "<group>";
@@ -130,6 +129,31 @@
 				0F533C1A237C54CD0060F79E /* CharacterListDeatailConfigurator.swift */,
 			);
 			path = CharactersListDetail;
+			sourceTree = "<group>";
+		};
+		0FCF090723800E83001D4C9C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0F533C0E237C47D80060F79E /* NetworkService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0FCF090823800EA0001D4C9C /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				0F533BF7237C45EF0060F79E /* Assets.xcassets */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		0FCF090923800EB0001D4C9C /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				0F533BF4237C45ED0060F79E /* Main.storyboard */,
+				0F533BF9237C45EF0060F79E /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -363,6 +387,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HZK8963RGN;
 				INFOPLIST_FILE = RickMortyApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -381,6 +406,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HZK8963RGN;
 				INFOPLIST_FILE = RickMortyApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

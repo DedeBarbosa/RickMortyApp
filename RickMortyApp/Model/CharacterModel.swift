@@ -12,7 +12,7 @@ struct CharactersList: Decodable{
     var results: [Character]
 }
 
-struct Character: Decodable{
+struct Character: Decodable, Equatable{
     let id: Int
     let name: String
     let image: String

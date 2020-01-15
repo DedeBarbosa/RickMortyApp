@@ -19,21 +19,27 @@ protocol CharacterListDetailsIneractorOutputProtocol: class {
 
 class CharacterListDetailsInteractor {
     
-    weak var presentor: CharacterListDetailsIneractorOutputProtocol!
+    weak var presenter: CharacterListDetailsIneractorOutputProtocol!
     private var character: Character
+    private var imageData: Data?
     
     
-    init(presentor: CharacterListDetailsIneractorOutputProtocol, character: Character) {
-        self.presentor = presentor
+    init(presenter: CharacterListDetailsIneractorOutputProtocol, character: Character, image: Data?) {
+        self.presenter = presenter
         self.character = character
+        self.imageData = image
     }
 }
 
 extension CharacterListDetailsInteractor: CharacterListDetailsInteractorProtocol {
     func provideCharacterListDetails() {
-        presentor.receiveCharacter(character: character)
-        if let data = NetworkService.shared.getImage(by: character.image){
-            presentor.recieveImage(data: data)
+        presenter.receiveCharacter(character: character)
+        if let image = imageData{
+            presenter.recieveImage(data: image)
+        } else{
+            NetworkService.shared.getImage(by: character.image){ [weak self] data in
+                self?.presenter.recieveImage(data: data)
+            }
         }
     }
     

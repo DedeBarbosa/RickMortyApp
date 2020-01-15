@@ -10,6 +10,7 @@ import UIKit
 
 protocol CharacterListViewProtocol: class{
     func reloadData()
+    func reloadImageInCell(by index: Int, with data: Data)
 }
 
 
@@ -17,14 +18,17 @@ protocol CharacterListViewProtocol: class{
 class CharacterListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    private let configurator: CharacterListConfiguratorProtocol = CharacterListCofigurator()
+    private let configurator: CharacterListConfiguratorProtocol = CharacterListConfigurator()
     var presenter: CharacterListPresenterProtocol!
     let detailSegue = "detailSegue"
+    let cellReuseId = "characterListCell"
+    let cellClass = CharacterListTableViewCell.self
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(cellClass, forCellReuseIdentifier: cellReuseId)
         configurator.configure(with: self)
         presenter.viewDidLoad()
     }
@@ -33,10 +37,10 @@ class CharacterListViewController: UIViewController {
            if segue.identifier == detailSegue {
                guard let character = sender as? Character else { return }
                let detailVC = segue.destination as! CharacterListDetailsViewController
-               let configurator: CharaterListDetailsConfiguratorProtocol = CharaterListDetailsConfigurator()
-               configurator.configure(with: detailVC, and: character)
-           }
+               let configurator: CharacterListDetailsConfiguratorProtocol = CharacterListDetailsConfigurator()
+            configurator.configure(view: detailVC, with: character, and: presenter.getCharacterImage(by: character))
        }
+    }
        
 }
 
@@ -54,9 +58,13 @@ extension CharacterListViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "reuseCell") as? CharacterListTableViewCell else {return UITableViewCell()}
-        guard let character = presenter.getCharacter(by: indexPath) else {return UITableViewCell()}
-        cell.configure(with: character)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseId) as? CharacterListTableViewCell else {return UITableViewCell()}
+        DispatchQueue.main.async {
+            cell.setName(with: self.presenter.getCharacterName(by: indexPath.row))
+        }
+        DispatchQueue.main.async {
+            cell.setImage(with: self.presenter.getCharacterImage(by: indexPath.row))
+        }
         return cell
     }
     
@@ -67,7 +75,12 @@ extension CharacterListViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         print(indexPath.row)
-        presenter.showCharacterDetails(for: indexPath)
+        presenter.showCharacterDetails(for: indexPath.row)
+    }
+    
+    func reloadImageInCell(by index: Int, with data: Data) {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? CharacterListTableViewCell else {return}
+        cell.setImage(with: data)
     }
     
 }
